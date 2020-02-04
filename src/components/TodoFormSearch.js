@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-function TodoFormSearch({ filterTodo }) {
-
-  const [todo, setTodos] = useState('');
-
-  const handleChange = (e) => {
-    setTodos(e.target.value)
-    filterTodo(todo)
-  }
+function TodoFormSearch({ handleChange, searchKey }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
   }
 
-  console.log(todo)
+  console.log('searchKey', searchKey)
+
+  const onChange = (e) => handleChange(e.target.value);
 
   return (
-    <div className='SearchBox'>
-      <form className='Form' onSubmit={handleSubmit}>
-        <input name='Input' type="text" onChange={handleChange} value={todo} />
+    <div className='searchBox'>
+      <form className='form' onSubmit={handleSubmit}>
+        <input name='input' type="text" onChange={onChange} value={searchKey} />
       </form>
     </div>
   )

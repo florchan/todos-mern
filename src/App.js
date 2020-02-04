@@ -7,6 +7,8 @@ import TodoFieldButtons from './components/TodoFieldButtons'
 
 function App() {
   const [todos, setTodos] = useState([{ text: '', status: 'active' }])
+  const [searchKey, setSearchKey] = useState('');
+  const [status, setStatus] = useState('active')
 
   const addTodo = (value) => {
     const todo = { text: value, status: 'active' };
@@ -14,24 +16,43 @@ function App() {
     setTodos(todos => ([...todos, todo]));
   }
 
-  // const deleteTodo = (id) => {
 
-  // }
+  const filteredTodos = todos.filter(todo => todo.text.includes(searchKey) && todo.status.includes(status))
 
-  const filterTodos = () => {
-    const filtertodos = todos.filter()
-    setTodos(filtertodos);
+
+  const todoComplete = (e) => {
+    setStatus('complete')
   }
 
-  // const addTodoBlock = ()
+  const todoActive = (e) => {
+    setStatus('active')
+  }
+
+  const todoAll = (e) => {
+    setTodos(todos)
+  }
+
+  const changeStatus = (status) => {
+    (status == 'active') ?
+      'complete'
+      :
+      'active'
+  }
+
+
+  const deleteTodo = (id) => {
+    const deleteTodo = todos.filter(todo => { return todo.id !== id })
+  }
+
+
 
   return (
     <div className="App">
       <div className="wrapper">
-        <TodoFormSearch filterTodo={filterTodos} />
-        <TodoList />
+        <TodoFormSearch handleChange={setSearchKey} searchKey={searchKey} />
+        <TodoList todos={filteredTodos} changeStatus={changeStatus} deleteTodo={deleteTodo} />
         <TodoFormAdd handleSubmit={addTodo} />
-        <TodoFieldButtons />
+        <TodoFieldButtons todos={todos} todoActive={todoActive} todoComplete={todoComplete} todoAll={todoAll} />
       </div>
     </div>
   );

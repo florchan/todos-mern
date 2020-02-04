@@ -48,3 +48,10 @@ body {
 .InputSearch{
   width: 500px;
 }
+
+.all {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 500px;
+}

@@ -1,12 +1,12 @@
 import React from 'react'
 import TodoListItems from './TodoListItems'
 
-function TodoList() {
+export default function TodoList({ todos, changeStatus, deleteTodo }) {
+
   return (
-    <div className='TodoBox'>
-      {/* <TodoListItems text={todos.text} id={todos.status} /> */}
+    <div className='TodoBox' onClick={changeStatus}>
+      <TodoListItems todos={todos} changeStatus={changeStatus} deleteTodo={deleteTodo} />
     </div>
   )
 }
 
-export default TodoList

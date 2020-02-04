@@ -1,12 +1,12 @@
 import React from 'react'
 
-function TodoFieldButtons() {
+function TodoFieldButtons({ todoAll, todoActive, todoComplete }) {
 
   return (
-    <div className='ButtonsBox'>
-      <button className='ButtonAll'></button>
-      <button className='ButtonActive'></button>
-      <button className='ButtonCompleted'></button>
+    <div className='buttonsBox'>
+      <button className='buttonAll' onClick={todoAll}>All</button>
+      <button className='buttonActive' onClick={todoActive}>Active</button>
+      <button className='buttonCompleted' onClick={todoComplete}>Complete</button>
     </div>
   )
 }
