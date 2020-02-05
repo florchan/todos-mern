@@ -1,21 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-function TodoListItems({ todos, changeStatus, deleteTodo }) {
-  const [status, setStatus] = useState()
-  const [id, setId] = useState()
-
-  const getStatus = (e) => {
-    changeStatus(status)
-  }
-
-  const getDelete = (e) => {
-    deleteTodo(id)
-  }
+function TodoListItems({ todos, getId, deleteTodo }) {
 
   const todoList = todos && todos.length ? (
-    todos.map(todos => (
-      <div className={todos.status} id={Math.random()} onClick={getStatus}>
-        <div className='TextBoxItem' onClick={changeStatus}>{todos.text}</div> <span className="ImgBoxItem" onClick={getDelete}>image</span>
+    todos.map(todo => (
+      <div className={todo.status} key={todo.id}>
+        <div className='textBoxItem' onClick={() => getId(todo.id)}>{todo.text}</div> <span className="imgBoxItem" onClick={() => deleteTodo(todo.id)}></span>
       </div >)))
     : (
       null

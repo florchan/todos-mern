@@ -6,22 +6,44 @@ import TodoFieldButtons from './components/TodoFieldButtons'
 
 
 function App() {
-  const [todos, setTodos] = useState([{ text: '', status: 'active' }])
+  const [todos, setTodos] = useState([])
   const [searchKey, setSearchKey] = useState('');
-  const [status, setStatus] = useState('active')
+  const [status, setStatus] = useState('')
 
   const addTodo = (value) => {
-    const todo = { text: value, status: 'active' };
+    if (value.trim() === "") {
+      return;
+    }
+    const todo = { text: value, status: 'active', id: '' };
     todo.id = Math.random();
     setTodos(todos => ([...todos, todo]));
   }
 
-
   const filteredTodos = todos.filter(todo => todo.text.includes(searchKey) && todo.status.includes(status))
+
+  const getId = (id) => {
+    todos.forEach(todo => {
+
+      if (todo.id == id && todo.status == 'active') {
+        todo.status = 'completed'
+      }
+      else {
+        if (todo.id == id && todo.status == 'completed') {
+          todo.status = 'active'
+        }
+      }
+    })
+    setTodos([...todos]);
+  }
+
+  const deleteTodo = (id) => {
+    const filteredTodos = todos.filter(todo => todo.id !== id)
+    setTodos([...filteredTodos])
+  }
 
 
   const todoComplete = (e) => {
-    setStatus('complete')
+    setStatus('completed')
   }
 
   const todoActive = (e) => {
@@ -29,28 +51,16 @@ function App() {
   }
 
   const todoAll = (e) => {
-    setTodos(todos)
+    setStatus('')
   }
-
-  const changeStatus = (status) => {
-    (status == 'active') ?
-      'complete'
-      :
-      'active'
-  }
-
-
-  const deleteTodo = (id) => {
-    const deleteTodo = todos.filter(todo => { return todo.id !== id })
-  }
-
 
 
   return (
     <div className="App">
       <div className="wrapper">
+        <p className="todos">Todos</p>
         <TodoFormSearch handleChange={setSearchKey} searchKey={searchKey} />
-        <TodoList todos={filteredTodos} changeStatus={changeStatus} deleteTodo={deleteTodo} />
+        <TodoList getId={getId} todos={filteredTodos} deleteTodo={deleteTodo} />
         <TodoFormAdd handleSubmit={addTodo} />
         <TodoFieldButtons todos={todos} todoActive={todoActive} todoComplete={todoComplete} todoAll={todoAll} />
       </div>

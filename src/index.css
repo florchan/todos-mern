@@ -21,6 +21,15 @@ body {
   box-sizing: inherit;
 }
 
+.todos{
+  margin:10px;
+  text-align: center;
+  font-size: 115px;
+  color: rgb(236, 58, 58);
+  text-rendering: optimizeLegibility;
+  font-weight: 100;
+}
+
 #root {
   min-height: 100vh ;
 }
@@ -37,21 +46,108 @@ body {
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+  padding: 100px;
   align-content: center;
-  justify-items: center;
-  align-items: center;
-  width: 500px;
-  height: 500px;
 }
 
-.InputSearch{
-  width: 500px;
-}
 
-.all {
+.active{
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  width: 500px;
+  width: auto;
+  text-align: center;
+  justify-content: space-between;
+  border: 1px solid #ddd
 }
+
+.completed{
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  text-align: center;
+  justify-content: space-between;
+  border: 1px solid #ddd;
+  text-decoration: line-through;
+  background-color: burlywood;
+  transition: 2s;
+  opacity: 0.4;
+}
+
+.input {
+  width: 550px;
+  text-align: left;
+  font: 25px 'Snell Roundhand',Snell Roundhand, cursives;
+  background-color: rgb(255, 255, 255);
+  font-style: italic;
+  padding: 20px;
+}
+
+.active:hover{
+  cursor: pointer;
+}
+.completed:hover{
+  cursor: pointer;
+}
+
+.todoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(173, 171, 171, 0.959);
+  box-shadow: 0px 0px 1px black;
+  padding: 5px 15px;
+  font: 25px 'Helvetica Neue', Snell Roundhand, cursives;
+  opacity: 0.7;
+  overflow-y: auto;
+  max-height: 21rem;
+}
+.buttonsBox {
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-around;
+  padding: 15px;
+  border: 1px solid #fff;
+  background: rgb(255, 255, 255,.7);
+  border: 1px solid rgba(173, 171, 171, 0.959);
+  box-shadow: 0px 0px 1px black;
+  height: 60px;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  opacity: 0.7;
+  box-shadow: 0px 0px 1px black;
+}
+.imgBoxItem {
+  width: 25px;
+  height: 25px;
+  align-self: center;
+  background-image: url(./274c.png);
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: center;
+}
+button{
+  background: rgba(86, 133, 97, 0.9);
+  margin: auto 15px;
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  border: 0px;
+  transition: 2s;
+  border-radius: 15px;
+  font-style: italic;
+  outline: none;
+  }
+  
+  button:hover{
+    cursor: pointer;
+     transform: scale(1.2);
+     border-radius: 10px
+  }

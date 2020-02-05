@@ -13,9 +13,9 @@ function TodoFormAdd({ handleSubmit }) {
   console.log(todo)
 
   return (
-    <div className='AddFormBox'>
-      <form className='Form' onSubmit={onSubmit}>
-        <input name='Input' type="text" onChange={e => setTodo(e.target.value)} value={todo} />
+    <div className='addFormBox'>
+      <form className='form' onSubmit={onSubmit}>
+        <input placeholder="Add" className='input' type="text" onChange={e => setTodo(e.target.value)} value={todo} />
       </form>
     </div>
   )

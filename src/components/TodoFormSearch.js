@@ -13,7 +13,7 @@ function TodoFormSearch({ handleChange, searchKey }) {
   return (
     <div className='searchBox'>
       <form className='form' onSubmit={handleSubmit}>
-        <input name='input' type="text" onChange={onChange} value={searchKey} />
+        <input className='input' type="text" placeholder="Search" onChange={onChange} value={searchKey} />
       </form>
     </div>
   )
