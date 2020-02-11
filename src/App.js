@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoFormSearch from './components/TodoFormSearch'
 import TodoFormAdd from './components/TodoFormAdd'
 import TodoList from './components/TodoList'
 import TodoFieldButtons from './components/TodoFieldButtons'
+import axios from 'axios';
 
 
 function App() {
@@ -10,14 +11,23 @@ function App() {
   const [searchKey, setSearchKey] = useState('');
   const [status, setStatus] = useState('')
 
-  const addTodo = (value) => {
+  async function addTodo(value) {
     if (value.trim() === "") {
       return;
     }
     const todo = { text: value, status: 'active', id: '' };
     todo.id = Math.random();
+    await axios.post('http://localhost:3001', todo)
+      .then(res => console.log("Todo: " + res.data))
+      .catch(err => console.log('Not todo'));
     setTodos(todos => ([...todos, todo]));
   }
+
+  useEffect(() => {
+    axios.get('http://localhost:3001')
+      .then(response => setTodos(response.data))
+  }, [todos])
+
 
   const filteredTodos = todos.filter(todo => todo.text.includes(searchKey) && todo.status.includes(status))
 
@@ -36,8 +46,11 @@ function App() {
     setTodos([...todos]);
   }
 
-  const deleteTodo = (id) => {
-    const filteredTodos = todos.filter(todo => todo.id !== id)
+  async function deleteTodo(id) {
+    const filteredTodos = todos.filter(todo => todo.id === id)
+    await axios.delete('http://localhost:3001' + filteredTodos[0]._id)
+      .then(res => console.log("Todo: " + res.data))
+      .catch(err => console.log('Not todo'));
     setTodos([...filteredTodos])
   }
 
