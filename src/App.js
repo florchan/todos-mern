@@ -11,35 +11,67 @@ function App() {
   const [searchKey, setSearchKey] = useState('');
   const [status, setStatus] = useState('')
 
+
+  async function getTodosMongo() {
+    const response = await axios.get('http://localhost:3000')
+    setTodos(response.data)
+    console.log(response.data)
+  }
+
+  async function changeStatus(status, todo) {
+    const ids = todo._id
+    console.log(todo)
+    console.log(status)
+    console.log(ids)
+    try {
+      const response = await axios.put('http://localhost:3000/' + ids, { status });
+      console.log("todo", response.data)
+      console.log(todo)
+    }
+    catch (err) {
+      console.log('Not todo', err)
+    }
+  }
+
+
+  useEffect(() => {
+    try {
+      getTodosMongo()
+    }
+    catch (err) {
+      console.log('Error', err)
+    }
+  }, [])
+
+
   async function addTodo(value) {
     if (value.trim() === "") {
       return;
     }
     const todo = { text: value, status: 'active', id: '' };
     todo.id = Math.random();
-    await axios.post('http://localhost:3001', todo)
-      .then(res => console.log("Todo: " + res.data))
-      .catch(err => console.log('Not todo'));
+    try {
+      const response = await axios.post('http://localhost:3000', todo)
+      console.log("Todo: " + response.data)
+    }
+    catch (err) {
+      console.log('Not todo', err)
+    }
     setTodos(todos => ([...todos, todo]));
   }
 
-  useEffect(() => {
-    axios.get('http://localhost:3001')
-      .then(response => setTodos(response.data))
-  }, [])
-
-
   const filteredTodos = todos.filter(todo => todo.text.includes(searchKey) && todo.status.includes(status))
 
-  const getId = (id) => {
+  async function getId(id) {
     todos.forEach(todo => {
-
       if (todo.id == id && todo.status == 'active') {
         todo.status = 'completed'
+        changeStatus(todo.status, todo)
       }
       else {
         if (todo.id == id && todo.status == 'completed') {
           todo.status = 'active'
+          changeStatus(todo.status, todo)
         }
       }
     })
@@ -49,10 +81,13 @@ function App() {
   async function deleteTodo(id) {
     const filterIdTodo = todos.filter(todo => todo.id === id)
     const filterNotIdTodo = todos.filter(todo => todo.id !== id)
-    await axios.delete('http://localhost:3001/' + filterIdTodo[0]._id)
-      .then(res => console.log("Todo: " + res.data))
-      .catch(err => console.log('Not todo'));
-    setTodos([...filterNotIdTodo])
+    try {
+      await axios.delete('http://localhost:3000/' + filterIdTodo[0]._id)
+      setTodos([...filterNotIdTodo])
+    }
+    catch (err) {
+      console.log('Not todo', err);
+    }
   }
 
 

@@ -20,4 +20,4 @@ connection.once('open', () => {
 
 app.use('/', todoRouter);
 
-app.listen(3001);
+app.listen(3000);
