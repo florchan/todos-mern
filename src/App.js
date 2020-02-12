@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     axios.get('http://localhost:3001')
       .then(response => setTodos(response.data))
-  }, [todos])
+  }, [])
 
 
   const filteredTodos = todos.filter(todo => todo.text.includes(searchKey) && todo.status.includes(status))
@@ -47,11 +47,12 @@ function App() {
   }
 
   async function deleteTodo(id) {
-    const filteredTodos = todos.filter(todo => todo.id === id)
-    await axios.delete('http://localhost:3001' + filteredTodos[0]._id)
+    const filterIdTodo = todos.filter(todo => todo.id === id)
+    const filterNotIdTodo = todos.filter(todo => todo.id !== id)
+    await axios.delete('http://localhost:3001/' + filterIdTodo[0]._id)
       .then(res => console.log("Todo: " + res.data))
       .catch(err => console.log('Not todo'));
-    setTodos([...filteredTodos])
+    setTodos([...filterNotIdTodo])
   }
 
 
